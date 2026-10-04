@@ -1,4 +1,4 @@
-"use client";
+return <main>return <main className={focus ? `focus-${focus}` : undefined}></main>"use client";
 
 import { useEffect, useState } from "react";
 
@@ -87,7 +87,7 @@ export function SiteExperience({ focus }: { focus?: string } = {}) {
         <h1>DONNEZ DU <em>RYTHME</em><br/>À VOS IMAGES.</h1>
         <p className="hero-lead">Montage vidéo, motion design et animation 2D pour transformer vos rushes en contenus qui captent l’attention.</p>
       <div className="hero-actions"><a className="button button-primary" href="#offres">Voir les offres <span>↘</span></a><a className="button button-ghost" href="#contact">Demander un devis</a></div>
-      </div>
+        return <main className={focus ? `focus-${focus}` : undefined}>
       <div className="hero-index" aria-hidden="true">PLAY <span>00:01:24</span></div>
       <a className="scroll" href="#services"><span/> DÉFILER</a>
     </section>
