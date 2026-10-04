@@ -117,7 +117,7 @@ export function SiteExperience({ focus }: { focus?: string } = {}) {
         <button role="tab" aria-selected={audience === "professionnel"} className={audience === "professionnel" ? "active" : ""} onClick={() => setAudience("professionnel")}><span>02</span> Je représente une entreprise</button>
       </div>
       <div className="audience-summary" data-reveal><p>{audience === "particulier" ? "Vidéos personnelles, créateurs, réseaux sociaux, souvenirs et événements — montage réalisé à partir de vos propres rushes." : "Interviews, vidéos de marque, contenus éditoriaux, campagnes et déclinaisons multi-formats — avec un cadre de production professionnel."}</p><a href="/options">Voir les options <span>↓</span></a></div>
-      <div className="price-grid">
+      <div className={`price-grid ${audience}`}>
         {packagesByAudience[audience].map((item) => <article className={item.featured ? "featured" : ""} data-reveal key={`${audience}-${item.name}`}><p className="price-tag">{item.name}</p><h3><small>À PARTIR DE · TTC</small> {item.price}</h3><p>{item.description}</p><ul>{item.details.map(detail => <li key={detail}>{detail}</li>)}</ul><a href="/devis">Construire mon devis <span>→</span></a></article>)}
       </div>
       <div className="option-panel" id="options" data-reveal>
