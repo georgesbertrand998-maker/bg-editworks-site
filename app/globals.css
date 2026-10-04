@@ -81,3 +81,8 @@ main[class^="focus-"] > footer { margin-top:0; }
 .professional-options{margin-top:34px;padding-top:30px;border-top:1px solid #d9182245;background:linear-gradient(135deg,#24090c55,transparent 60%)}
 .professional-options .option-intro{margin-bottom:18px}
 .professional-options .option-intro h3{color:#fff}
+.price-grid.professionnel article{background:linear-gradient(145deg,#1b0b0d,#0d0d0f 62%);border-color:#6f2027;box-shadow:inset 0 0 0 1px #d9182240,0 18px 45px #0008}
+.price-grid.professionnel article .price-tag,.price-grid.professionnel article h3,.price-grid.professionnel article li{color:#fff}
+.price-grid.professionnel article h3 small{color:#ff6970}
+.price-grid.professionnel article p{color:#c4bfbc}
+.price-grid.professionnel article.featured{background:linear-gradient(145deg,#4a0d13,#170b0d 70%);border-color:#ff3943;box-shadow:inset 0 0 0 2px #df171e,0 0 32px #df171e55}
