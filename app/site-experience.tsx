@@ -76,7 +76,7 @@ export function SiteExperience({ focus }: { focus?: string } = {}) {
       <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="Ouvrir le menu"><i/><i/></button>
       <nav className={menuOpen ? "open" : ""} aria-label="Navigation principale">
         <a onClick={close} href="/services">Services</a><a onClick={close} href="/offres">Offres & tarifs</a><a onClick={close} href="/options">Options</a><a onClick={close} href="/portfolio">Portfolio</a><a onClick={close} href="/methode">Méthode</a><a onClick={close} href="/a-propos">Le studio</a>
-        <a onClick={close} className="nav-cta" href="/#contact">Parler de votre projet</a>
+        <a onClick={close} className="nav-cta" href="/devis">Devis en ligne</a>
       </nav>
     </header>
 
@@ -86,7 +86,7 @@ export function SiteExperience({ focus }: { focus?: string } = {}) {
         <p className="eyebrow"><span/> Studio indépendant de post-production</p>
         <h1>DONNEZ DU <em>RYTHME</em><br/>À VOS IMAGES.</h1>
         <p className="hero-lead">Montage vidéo, motion design et animation 2D pour transformer vos rushes en contenus qui captent l’attention.</p>
-      <div className="hero-actions"><a className="button button-primary" href="/offres">Voir les offres <span>↘</span></a><a className="button button-ghost" href="/#contact">Demander un devis</a></div>
+      <div className="hero-actions"><a className="button button-primary" href="/offres">Voir les offres <span>↘</span></a><a className="button button-ghost" href="/devis">Devis en ligne</a></div>
       </div>
       <div className="hero-index" aria-hidden="true">PLAY <span>00:01:24</span></div>
       <a className="scroll" href="/services"><span/> DÉFILER</a>
@@ -107,7 +107,7 @@ export function SiteExperience({ focus }: { focus?: string } = {}) {
       </div>
       <div className="audience-summary" data-reveal><p>{audience === "particulier" ? "Vidéos personnelles, créateurs, réseaux sociaux, souvenirs et événements — montage réalisé à partir de vos propres rushes." : "Interviews, vidéos de marque, contenus éditoriaux, campagnes et déclinaisons multi-formats — avec un cadre de production professionnel."}</p><a href="/options">Voir les options <span>↓</span></a></div>
       <div className="price-grid">
-        {packagesByAudience[audience].map((item) => <article className={item.featured ? "featured" : ""} data-reveal key={`${audience}-${item.name}`}><p className="price-tag">{item.name}</p><h3><small>À PARTIR DE · TTC</small> {item.price}</h3><p>{item.description}</p><ul>{item.details.map(detail => <li key={detail}>{detail}</li>)}</ul><a href="/#contact">Demander un devis <span>→</span></a></article>)}
+        {packagesByAudience[audience].map((item) => <article className={item.featured ? "featured" : ""} data-reveal key={`${audience}-${item.name}`}><p className="price-tag">{item.name}</p><h3><small>À PARTIR DE · TTC</small> {item.price}</h3><p>{item.description}</p><ul>{item.details.map(detail => <li key={detail}>{detail}</li>)}</ul><a href="/devis">Construire mon devis <span>→</span></a></article>)}
       </div>
       <div className="option-panel" id="options" data-reveal>
         <div className="option-intro"><p className="kicker">OPTIONS À LA CARTE</p><h3>Complétez votre montage.</h3><p>Tarifs TTC indicatifs ajoutés au forfait de base. Chaque option est confirmée dans le devis avant le démarrage. TVA non applicable, art. 293 B du CGI.</p></div>
@@ -118,7 +118,7 @@ export function SiteExperience({ focus }: { focus?: string } = {}) {
     </section>
 
     <section className="section work" id="portfolio">
-      <div className="section-heading split" data-reveal><div><p className="kicker">03 — SÉLECTION</p><h2>Showreel<br/><em>BG EDITWORKS.</em></h2></div><p>Une compilation de travaux en montage vidéo, motion design et animation 2D, réunie dans un montage rythmé avec transitions en fondu et bande-son dédiée.</p></div>
+      <div className="section-heading split" data-reveal><div><p className="kicker">03 — SÉLECTION</p><h2>Showreel<br/><em>BG EDITWORKS.</em></h2></div><p><strong>Portfolio en cours de construction.</strong> Exemples présentés à titre de démonstration : une compilation de travaux en montage vidéo, motion design et animation 2D, réunie dans un montage rythmé avec transitions en fondu et bande-son dédiée.</p></div>
       <article className="showreel-card" data-reveal><video className="showreel-video" controls preload="metadata" poster="/og.png"><source src="/showreel.mp4" type="video/mp4"/>Votre navigateur ne prend pas en charge la vidéo.</video><div className="showreel-copy"><p className="kicker">SHOWREEL · MONTAGE & ANIMATION</p><h3>Donner du rythme à vos images.</h3><p>Exemple de compilation réunissant six identités animées, montées et enchaînées avec une transition en fondu et une bande-son dédiée.</p><div className="showreel-notes">{animationNotes.map(([title, text]) => <div key={title}><strong>{title}</strong><span>{text}</span></div>)}</div></div></article>
       <div className="project-grid">{projects.map((project, i) => <article className={`project project-${i+1}`} key={project.mark} data-reveal><div className="project-visual" style={{backgroundImage: `linear-gradient(180deg,#05050622,#050506cc), url(${project.image})`, backgroundPosition: project.position}}><span className="frame-corner tl"/><span className="frame-corner br"/><b>{project.mark}</b><div className="timeline">{[1,2,3,4,5,6,7,8].map(n => <i key={n}/>)}</div><div className="play">▶</div></div><p>{project.type}</p><h3>{project.title}</h3></article>)}</div>
     </section>
@@ -135,10 +135,10 @@ export function SiteExperience({ focus }: { focus?: string } = {}) {
 
     <section className="contact" id="contact">
       <p className="kicker" data-reveal>06 — CONTACT</p><h2 data-reveal>VOTRE PROCHAIN FILM<br/>COMMENCE <em>ICI.</em></h2>
-      <div className="contact-row" data-reveal><div className="contact-details"><a className="phone" href="tel:+33614422782">06 14 42 27 82 <span>↗</span></a><a className="email" href="mailto:bgeditworks@gmail.com">bgeditworks@gmail.com <span>↗</span></a></div><div className="contact-actions"><a className="button button-primary" href="mailto:bgeditworks@gmail.com?subject=Demande%20de%20devis%20-%20BG%20EDITWORKS">Demander un devis</a><a className="button button-ghost" href="tel:+33614422782">Appeler le studio</a></div></div>
+      <div className="contact-row" data-reveal><div className="contact-details"><a className="phone" href="tel:+33614422782">06 14 42 27 82 <span>↗</span></a><a className="email" href="mailto:bgeditworks@gmail.com">bgeditworks@gmail.com <span>↗</span></a></div><div className="contact-actions"><a className="button button-primary" href="/devis">Devis en ligne</a><a className="button button-ghost" href="tel:+33614422782">Appeler le studio</a></div></div>
       <p className="contact-note">Disponible pour des collaborations à distance · France</p>
     </section>
 
-    <footer><a className="brand" href="/"><span>BG</span><b>EDITWORKS</b></a><p>Studio indépendant de post-production<br/>Montage · Motion Design · Animation 2D<br/><a href="mailto:bgeditworks@gmail.com">bgeditworks@gmail.com</a></p><div><a href="/services">Services</a><a href="/offres">Particuliers</a><a href="/offres">Professionnels</a><a href="/options">Options</a><a href="/#contact">Contact</a><a href="/mentions-legales">Mentions légales</a></div><small>© 2026 Bertrand Paul Emmanuel GEORGES EI — BG EDITWORKS</small></footer>
+    <footer><a className="brand" href="/"><span>BG</span><b>EDITWORKS</b></a><p>Studio indépendant de post-production<br/>Montage · Motion Design · Animation 2D<br/><a href="mailto:bgeditworks@gmail.com">bgeditworks@gmail.com</a></p><div><a href="/services">Services</a><a href="/offres">Particuliers</a><a href="/offres">Professionnels</a><a href="/options">Options</a><a href="/devis">Devis en ligne</a><a href="/#contact">Contact</a><a href="/mentions-legales">Mentions légales</a></div><small>© 2026 Bertrand Paul Emmanuel GEORGES EI — BG EDITWORKS</small></footer>
   </main>;
 }
