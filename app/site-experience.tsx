@@ -45,7 +45,14 @@ const packagesByAudience = {
   ],
 };
 
-const professionalOptions = [\n  ["Déclinaison multi-format", "95 €", "par format supplémentaire · vertical, carré ou horizontal"],\n  ["Habillage de marque", "180 €", "titres, couleurs et éléments graphiques de votre identité"],\n  ["Export multi-plateformes", "inclus", "livraison adaptée aux canaux prévus au devis"],\n  ["Livraison prioritaire", "+ 35 %", "sous réserve de disponibilité"],\n];\n\nconst options = [
+const professionalOptions = [
+  ["Déclinaison multi-format", "95 €", "par format supplémentaire · vertical, carré ou horizontal"],
+  ["Habillage de marque", "180 €", "titres, couleurs et éléments graphiques de votre identité"],
+  ["Export multi-plateformes", "inclus", "livraison adaptée aux canaux prévus au devis"],
+  ["Livraison prioritaire", "+ 35 %", "sous réserve de disponibilité"],
+];
+
+const options = [
   ["Montage à l’heure", "40 €", "tout compris · minimum 2 h"],
   ["Pack 5 heures", "190 €", "prépayé · remise de 5 % · valable 3 mois"],
   ["Pack 10 heures", "360 €", "prépayé · remise de 10 % · valable 3 mois"],
