@@ -72,10 +72,10 @@ export function SiteExperience({ focus }: { focus?: string } = {}) {
   const close = () => setMenuOpen(false);
   return <main className={focus ? `focus-${focus}` : undefined}>
     <header className="nav-shell">
-      <a className="brand" href="#top" aria-label="BG Editworks, accueil"><span>BG</span><b>EDITWORKS</b></a>
+      <a className="brand" href="/" aria-label="BG Editworks, accueil"><span>BG</span><b>EDITWORKS</b></a>
       <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="Ouvrir le menu"><i/><i/></button>
       <nav className={menuOpen ? "open" : ""} aria-label="Navigation principale">
-        <a onClick={close} href="#services">Services</a><a onClick={close} href="#offres">Offres & tarifs</a><a onClick={close} href="#options">Options</a><a onClick={close} href="#portfolio">Portfolio</a><a onClick={close} href="#methode">Méthode</a><a onClick={close} href="#studio">Le studio</a>
+        <a onClick={close} href="/services">Services</a><a onClick={close} href="/offres">Offres & tarifs</a><a onClick={close} href="/options">Options</a><a onClick={close} href="/portfolio">Portfolio</a><a onClick={close} href="/methode">Méthode</a><a onClick={close} href="/a-propos">Le studio</a>
         <a onClick={close} className="nav-cta" href="#contact">Parler de votre projet</a>
       </nav>
     </header>
