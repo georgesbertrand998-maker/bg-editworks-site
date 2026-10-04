@@ -1,4 +1,4 @@
-return <main>return <main className={focus ? `focus-${focus}` : undefined}></main>"use client";
+return <main className={focus ? `focus-${focus}` : undefined}>return <main className={focus ? `focus-${focus}` : undefined}></main>"use client";
 
 import { useEffect, useState } from "react";
 
@@ -70,7 +70,7 @@ export function SiteExperience({ focus }: { focus?: string } = {}) {
   }, [focus]);
 
   const close = () => setMenuOpen(false);
-  return <main>
+  
     <header className="nav-shell">
       <a className="brand" href="#top" aria-label="BG Editworks, accueil"><span>BG</span><b>EDITWORKS</b></a>
       <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="Ouvrir le menu"><i/><i/></button>

@@ -61,3 +61,22 @@
 .audience-switch{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);margin-bottom:24px}.audience-switch button{display:flex;align-items:center;gap:18px;padding:22px 26px;background:#09090a;color:#85817f;border:0;border-right:1px solid var(--line);text-align:left;text-transform:uppercase;font:500 15px Oswald;letter-spacing:.05em;cursor:pointer;transition:.25s}.audience-switch button:last-child{border-right:0}.audience-switch button span{font:9px monospace;color:var(--red)}.audience-switch button.active{background:linear-gradient(135deg,#3a0a0e,#140b0c);color:#fff;box-shadow:inset 0 -3px var(--red)}.audience-summary{display:flex;justify-content:space-between;align-items:center;gap:30px;margin:0 0 30px}.audience-summary p{max-width:760px;color:#989492;font-size:13px;line-height:1.7;margin:0}.audience-summary a{font-size:9px;text-transform:uppercase;letter-spacing:.14em;color:#ddd;white-space:nowrap}.audience-summary a span{color:var(--red);margin-left:10px}
 @media(max-width:560px){.audience-switch{grid-template-columns:1fr}.audience-switch button{border-right:0;border-bottom:1px solid var(--line)}.audience-switch button:last-child{border-bottom:0}.audience-summary{align-items:flex-start;flex-direction:column}}
  .showreel-card{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.65fr);gap:32px;align-items:center;border:1px solid #ffffff18;background:#0a0a0b;padding:18px;box-shadow:0 20px 55px #0008}.showreel-video{display:block;width:100%;aspect-ratio:16/9;background:#050506;object-fit:cover}.showreel-copy{padding:18px 22px}.showreel-copy h3{font:500 clamp(28px,3.2vw,48px) Oswald;text-transform:uppercase;margin:12px 0 18px}.showreel-copy p:not(.kicker){color:#97918e;line-height:1.75;font-size:13px}.showreel-notes{display:grid;gap:10px;margin-top:22px;border-top:1px solid #ffffff14;padding-top:18px}.showreel-notes div{display:grid;grid-template-columns:105px 1fr;gap:12px;align-items:start;font-size:12px;line-height:1.5}.showreel-notes strong{color:#e7e0dc;font-weight:600}.showreel-notes span{color:#8f8986}@media(max-width:900px){.showreel-card{grid-template-columns:1fr}.showreel-copy{padding:8px 4px 18px}.showreel-notes div{grid-template-columns:90px 1fr}}
+
+
+ /* Dedicated public pages */
+ main[class^="focus-"] > .hero,
+ main[class^="focus-"] > .statement,
+ main[class^="focus-"] > .services,
+ main[class^="focus-"] > .pricing,
+ main[class^="focus-"] > .work,
+ main[class^="focus-"] > .process,
+ main[class^="focus-"] > .studio,
+ main[class^="focus-"] > .contact { display: none; }
+ main.focus-services > .services,
+ main.focus-offres > .pricing,
+ main.focus-options > .pricing,
+ main.focus-portfolio > .work,
+ main.focus-methode > .process,
+ main.focus-a-propos > .studio { display: block; }
+ main[class^="focus-"] > footer { margin-top: 0; }
+ 
