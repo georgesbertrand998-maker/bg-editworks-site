@@ -20,7 +20,7 @@
 @media(max-width:760px){.legal-content{grid-template-columns:1fr}.legal-hero{padding-top:80px}.legal-nav{height:70px}.legal-back{font-size:8px}.legal-footer{flex-direction:column;gap:15px}}
 
 /* Cinematic hero artwork */
-.hero-scene{opacity:.96;background-image:linear-gradient(90deg,#050506 0%,#050506f8 28%,#050506b8 43%,transparent 68%),linear-gradient(0deg,#070708 0%,transparent 38%),url('/hero-studio.png');background-size:cover;background-position:center center;background-repeat:no-repeat}
+.hero-scene{opacity:.96;background-image:linear-gradient(90deg,#050506 0%,#050506f8 28%,#050506b8 43%,transparent 68%),linear-gradient(0deg,#070708 0%,transparent 38%),url('/hero-studio.png');background-size:100% 100%;background-position:center;background-repeat:no-repeat}
 .camera{display:none}.hero .smoke{mix-blend-mode:screen;opacity:.18}.hero:after{background:linear-gradient(90deg,#050506 0%,transparent 58%),linear-gradient(0deg,#080808 0%,transparent 40%)}
 @media(max-width:900px){.hero-scene{transform:none;background-position:67% center}.hero:after{background:linear-gradient(90deg,#050506f5 0%,#050506a8 58%,transparent 100%),linear-gradient(0deg,#080808 0%,transparent 45%)}}
 
