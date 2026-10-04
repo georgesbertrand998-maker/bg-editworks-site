@@ -3,6 +3,7 @@
 <!-- Build Cloudflare déclenché après correction du composant professionnel. -->
 <!-- Vérification finale du rendu entreprise. -->
 <!-- Contraste entreprise à vérifier en production. -->
+<!-- Pages dédiées : contenu toujours lisible. -->
 
 A clean full-stack starter running on
 [vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
