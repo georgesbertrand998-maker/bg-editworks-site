@@ -28,6 +28,7 @@ main.focus-methode > section:not(.process),
 main.focus-studio > section:not(.studio),
 main.focus-a-propos > section:not(.studio) { display:none; }
 main[class^="focus-"] > footer { margin-top:0; }
+main[class^="focus-"] [data-reveal]{opacity:1;transform:none}
 
 /* Cinematic hero artwork */
 .hero-scene{opacity:.96;background-image:linear-gradient(90deg,#050506 0%,#050506f8 28%,#050506b8 43%,transparent 68%),linear-gradient(0deg,#070708 0%,transparent 38%),url('/hero-studio.png');background-size:100% 100%;background-position:center;background-repeat:no-repeat}
