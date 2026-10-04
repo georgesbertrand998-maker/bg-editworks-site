@@ -45,7 +45,7 @@ const packagesByAudience = {
   ],
 };
 
-const options = [
+const professionalOptions = [\n  ["Déclinaison multi-format", "95 €", "par format supplémentaire · vertical, carré ou horizontal"],\n  ["Habillage de marque", "180 €", "titres, couleurs et éléments graphiques de votre identité"],\n  ["Export multi-plateformes", "inclus", "livraison adaptée aux canaux prévus au devis"],\n  ["Livraison prioritaire", "+ 35 %", "sous réserve de disponibilité"],\n];\n\nconst options = [
   ["Montage à l’heure", "40 €", "tout compris · minimum 2 h"],
   ["Pack 5 heures", "190 €", "prépayé · remise de 5 % · valable 3 mois"],
   ["Pack 10 heures", "360 €", "prépayé · remise de 10 % · valable 3 mois"],
@@ -115,7 +115,7 @@ export function SiteExperience({ focus }: { focus?: string } = {}) {
       </div>
       <div className="option-panel" id="options" data-reveal>
         <div className="option-intro"><p className="kicker">OPTIONS À LA CARTE</p><h3>Complétez votre montage.</h3><p>Tarifs TTC indicatifs ajoutés au forfait de base. Chaque option est confirmée dans le devis avant le démarrage. TVA non applicable, art. 293 B du CGI.</p></div>
-        <div className="option-grid">{options.map(([name, price, note]) => <article key={name}><div><h4>{name}</h4><p>{note}</p></div><strong><small>À PARTIR DE · TTC</small>{price}</strong></article>)}</div>
+        <div className="option-grid">{options.filter(([name]) => name !== "Livraison prioritaire").map(([name, price, note]) => <article key={name}><div><h4>{name}</h4><p>{note}</p></div><strong><small>À PARTIR DE · TTC</small>{price}</strong></article>)}</div>\n        {audience === "professionnel" && <div className="professional-options" data-reveal><div className="option-intro"><p className="kicker">POUR LES ENTREPRISES</p><h3>Options professionnelles.</h3><p>Des compléments pour diffuser votre contenu sur plusieurs canaux et respecter votre identité de marque.</p></div><div className="option-grid">{professionalOptions.map(([name, price, note]) => <article key={name}><div><h4>{name}</h4><p>{note}</p></div><strong><small>{price === "inclus" ? "DANS LE FORFAIT · TTC" : "À PARTIR DE · TTC"}</small>{price}</strong></article>)}</div></div>}
       </div>
       <p className="pricing-note" data-reveal><strong>Prix affichés TTC.</strong> En raison de la franchise en base de TVA, le prix HT est égal au prix TTC : TVA non applicable, art. 293 B du CGI. Prestations réalisées à partir des fichiers fournis par le client. BG EDITWORKS est un studio indépendant de post-production et ne propose pas de tournage dans ces forfaits. Toute musique, police, image ou ressource payante nécessitant une licence est chiffrée séparément.</p>
       <div className="conditions" data-reveal><p className="kicker">CONDITIONS DE COLLABORATION</p><div><p><b>Devis avant démarrage.</b> Le périmètre, le calendrier, les livrables et le tarif sont validés avant le début de la prestation.</p><p><b>Brief précis.</b> Pour l’animation 3D de base, le client fournit avant démarrage la référence, la durée, le format, les éléments graphiques et le résultat attendu. Une seule version est livrée.</p><p><b>Corrections encadrées.</b> Toute nouvelle version, changement de direction ou demande hors périmètre fait l’objet d’un complément après accord.</p><p><b>Paiement et droits.</b> L’échéancier, les éventuels acomptes et la cession des droits d’utilisation sont précisés dans le devis.</p></div></div>
