@@ -47,6 +47,8 @@ const packagesByAudience = {
 
 const options = [
   ["Montage à l’heure", "40 €", "tout compris · minimum 2 h"],
+  ["Pack 5 heures", "190 €", "prépayé · remise de 5 % · valable 3 mois"],
+  ["Pack 10 heures", "360 €", "prépayé · remise de 10 % · valable 3 mois"],
   ["Rushes supplémentaires", "120 €", "par tranche de 30 min"],
   ["Sous-titrage", "90 €", "jusqu’à 5 min"],
   ["Format supplémentaire", "95 €", "vertical, carré ou horizontal"],
