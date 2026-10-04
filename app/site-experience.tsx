@@ -57,6 +57,7 @@ const options = [
   ["Nettoyage audio avancé", "140 €", "selon la qualité des sources"],
   ["Motion design supplémentaire", "260 €", "module graphique simple"],
   ["Animation 2D personnalisée", "420 €", "séquence courte"],
+  ["Animation 3D de base", "450 €", "logo en relief, texte 3D court ou objet simple"],
   ["Remise des fichiers sources", "180 €", "si techniquement possible et prévu"],
   ["Livraison prioritaire", "+ 35 %", "sous réserve de disponibilité"],
 ];
