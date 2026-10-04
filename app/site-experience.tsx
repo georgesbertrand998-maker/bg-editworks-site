@@ -1,4 +1,4 @@
-return <main className={focus ? `focus-${focus}` : undefined}>return <main className={focus ? `focus-${focus}` : undefined}></main>"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 
@@ -70,7 +70,7 @@ export function SiteExperience({ focus }: { focus?: string } = {}) {
   }, [focus]);
 
   const close = () => setMenuOpen(false);
-  
+  return <main className={focus ? `focus-${focus}` : undefined}>
     <header className="nav-shell">
       <a className="brand" href="#top" aria-label="BG Editworks, accueil"><span>BG</span><b>EDITWORKS</b></a>
       <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="Ouvrir le menu"><i/><i/></button>
@@ -87,7 +87,7 @@ export function SiteExperience({ focus }: { focus?: string } = {}) {
         <h1>DONNEZ DU <em>RYTHME</em><br/>À VOS IMAGES.</h1>
         <p className="hero-lead">Montage vidéo, motion design et animation 2D pour transformer vos rushes en contenus qui captent l’attention.</p>
       <div className="hero-actions"><a className="button button-primary" href="#offres">Voir les offres <span>↘</span></a><a className="button button-ghost" href="#contact">Demander un devis</a></div>
-        return <main className={focus ? `focus-${focus}` : undefined}>
+      </div>
       <div className="hero-index" aria-hidden="true">PLAY <span>00:01:24</span></div>
       <a className="scroll" href="#services"><span/> DÉFILER</a>
     </section>
