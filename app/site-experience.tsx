@@ -57,7 +57,7 @@ const options = [
   ["Nettoyage audio avancé", "140 €", "selon la qualité des sources"],
   ["Motion design supplémentaire", "260 €", "module graphique simple"],
   ["Animation 2D personnalisée", "420 €", "séquence courte"],
-  ["Animation 3D de base", "450 €", "logo en relief, texte 3D court ou objet simple"],
+  ["Animation 3D de base", "450 €", "brief précis · une version livrée · logo, texte ou objet simple"],
   ["Remise des fichiers sources", "180 €", "si techniquement possible et prévu"],
   ["Livraison prioritaire", "+ 35 %", "sous réserve de disponibilité"],
 ];
@@ -118,7 +118,7 @@ export function SiteExperience({ focus }: { focus?: string } = {}) {
         <div className="option-grid">{options.map(([name, price, note]) => <article key={name}><div><h4>{name}</h4><p>{note}</p></div><strong><small>À PARTIR DE · TTC</small>{price}</strong></article>)}</div>
       </div>
       <p className="pricing-note" data-reveal><strong>Prix affichés TTC.</strong> En raison de la franchise en base de TVA, le prix HT est égal au prix TTC : TVA non applicable, art. 293 B du CGI. Prestations réalisées à partir des fichiers fournis par le client. BG EDITWORKS est un studio indépendant de post-production et ne propose pas de tournage dans ces forfaits. Toute musique, police, image ou ressource payante nécessitant une licence est chiffrée séparément.</p>
-      <div className="conditions" data-reveal><p className="kicker">CONDITIONS DE COLLABORATION</p><div><p><b>Devis avant démarrage.</b> Le périmètre, le calendrier, les livrables et le tarif sont validés avant le début de la prestation.</p><p><b>Corrections encadrées.</b> Corrections selon les conditions définies dans le devis. Toute demande hors périmètre fait l’objet d’un complément.</p><p><b>Paiement et droits.</b> L’échéancier, les éventuels acomptes et la cession des droits d’utilisation sont précisés dans le devis.</p><p><b>Fichiers et archivage.</b> Les formats livrés et la durée de conservation des fichiers de travail sont indiqués pour chaque projet.</p></div></div>
+      <div className="conditions" data-reveal><p className="kicker">CONDITIONS DE COLLABORATION</p><div><p><b>Devis avant démarrage.</b> Le périmètre, le calendrier, les livrables et le tarif sont validés avant le début de la prestation.</p><p><b>Brief précis.</b> Pour l’animation 3D de base, le client fournit avant démarrage la référence, la durée, le format, les éléments graphiques et le résultat attendu. Une seule version est livrée.</p><p><b>Corrections encadrées.</b> Toute nouvelle version, changement de direction ou demande hors périmètre fait l’objet d’un complément après accord.</p><p><b>Paiement et droits.</b> L’échéancier, les éventuels acomptes et la cession des droits d’utilisation sont précisés dans le devis.</p></div></div>
     </section>
 
     <section className="section work" id="portfolio">
