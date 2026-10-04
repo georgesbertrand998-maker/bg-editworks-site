@@ -4,6 +4,7 @@
 <!-- Vérification finale du rendu entreprise. -->
 <!-- Contraste entreprise à vérifier en production. -->
 <!-- Pages dédiées : contenu toujours lisible. -->
+<!-- Correction de l'estimation de livraison prioritaire. -->
 
 A clean full-stack starter running on
 [vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
