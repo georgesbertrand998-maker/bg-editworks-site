@@ -1,91 +1,51 @@
 "use client";
 
-import type { FormEvent } from "react";
+import { useMemo, useState } from "react";
 
-export function QuoteForm() {
-  function prepareEmail(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const name = String(data.get("name") ?? "");
-    const email = String(data.get("email") ?? "");
-    const service = String(data.get("service") ?? "");
-    const budget = String(data.get("budget") ?? "");
-    const deadline = String(data.get("deadline") ?? "");
-    const message = String(data.get("message") ?? "");
+const packages = {
+  particulier: [
+    ["Montage personnel premium", 480],
+    ["Créateur & réseaux", 690],
+    ["Film souvenir / événement", 950],
+  ],
+  professionnel: [
+    ["Montage professionnel", 650],
+    ["Montage + Motion", 890],
+    ["Campagne multi-format", 1450],
+  ],
+} as const;
 
-    const subject = `Demande de devis — ${service || "Projet vidéo"}`;
-    const body = [
-      "Bonjour BG EDITWORKS,",
-      "",
-      `Nom : ${name}`,
-      `E-mail : ${email}`,
-      `Prestation : ${service}`,
-      `Budget indicatif : ${budget}`,
-      `Délai souhaité : ${deadline || "À définir"}`,
-      "",
-      "Présentation du projet :",
-      message,
-      "",
-      "Merci.",
-    ].join("\n");
+const options = [
+  ["Sous-titrage", 90], ["Format supplémentaire", 95],
+  ["Miniature / visuel", 75], ["Étalonnage avancé", 190],
+  ["Nettoyage audio avancé", 140], ["Motion design supplémentaire", 260],
+  ["Animation 2D personnalisée", 420], ["Livraison prioritaire", 0],
+] as const;
 
-    window.location.href = `mailto:bgeditworks@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  }
-
-  return (
-    <form className="quoteForm" onSubmit={prepareEmail}>
-      <div className="formHead">
-        <p>Votre projet</p>
-        <span>Demande sans engagement</span>
-      </div>
-      <div className="formGrid">
-        <label>
-          <span>Nom ou entreprise</span>
-          <input name="name" type="text" placeholder="Votre nom" required />
-        </label>
-        <label>
-          <span>Adresse e-mail</span>
-          <input name="email" type="email" placeholder="vous@entreprise.fr" required />
-        </label>
-        <label>
-          <span>Prestation</span>
-          <select name="service" defaultValue="" required>
-            <option value="" disabled>Choisir une prestation</option>
-            <option>Montage vidéo</option>
-            <option>Motion design</option>
-            <option>Animation 2D</option>
-            <option>Post-production complète</option>
-            <option>Pack 4 Shorts</option>
-            <option>Pack 8 Shorts</option>
-            <option>Pack 4 vidéos YouTube</option>
-            <option>Pack mixte</option>
-            <option>Autre demande</option>
-          </select>
-        </label>
-        <label>
-          <span>Budget indicatif</span>
-          <select name="budget" defaultValue="" required>
-            <option value="" disabled>Sélectionner une fourchette</option>
-            <option>Moins de 500 €</option>
-            <option>500 € — 1 000 €</option>
-            <option>1 000 € — 2 500 €</option>
-            <option>Plus de 2 500 €</option>
-            <option>À définir ensemble</option>
-          </select>
-        </label>
-        <label className="full">
-          <span>Délai souhaité</span>
-          <input name="deadline" type="text" placeholder="Ex. : livraison avant le 30 septembre" />
-        </label>
-        <label className="full">
-          <span>Parlez-moi du projet</span>
-          <textarea name="message" rows={5} placeholder="Format, durée, volume de rushes, objectif de la vidéo…" required />
-        </label>
-      </div>
-      <div className="formFooter">
-        <p>Cette demande ne déclenche aucun travail. Votre messagerie s’ouvrira avec les informations déjà préparées. Consultez la <a href="/politique-de-confidentialite">politique de confidentialité</a>.</p>
-        <button className="button primary large" type="submit">Préparer ma demande <span>↗</span></button>
-      </div>
+export default function QuoteForm() {
+  const [audience, setAudience] = useState<keyof typeof packages>("particulier");
+  const [packageIndex, setPackageIndex] = useState(0);
+  const [selected, setSelected] = useState<string[]>([]);
+  const [hours, setHours] = useState(0);
+  const base = packages[audience][packageIndex]?.[1] ?? 0;
+  const optionsTotal = selected.reduce((sum, name) => sum + (options.find((item) => item[0] === name)?.[1] ?? 0), 0);
+  const hourlyTotal = hours * 55;
+  const total = base + optionsTotal + hourlyTotal;
+  const mailBody = useMemo(() => `Bonjour,\n\nJe souhaite une estimation pour ${packages[audience][packageIndex][0]}.\nOptions : ${selected.join(", ") || "aucune"}.\nHeures à la carte : ${hours || 0}.\nEstimation indicative TTC : ${total.toLocaleString("fr-FR")} €.\n\nMerci,`, [audience, packageIndex, selected, hours, total]);
+  const toggle = (name: string) => setSelected((current) => current.includes(name) ? current.filter((item) => item !== name) : [...current, name]);
+  return <div className="quote-layout">
+    <form className="quote-form" onSubmit={(event) => event.preventDefault()}>
+      <p className="kicker">ESTIMATION EN LIGNE</p>
+      <h2>Construisez votre <em>devis.</em></h2>
+      <p className="quote-intro">Sélectionnez votre profil, une formule et les options utiles. Le montant se met à jour en temps réel ; le devis définitif est confirmé avant tout démarrage.</p>
+      <fieldset><legend>Vous êtes</legend><div className="quote-audience">
+        <button type="button" className={audience === "particulier" ? "selected" : ""} onClick={() => { setAudience("particulier"); setPackageIndex(0); }}>Particulier</button>
+        <button type="button" className={audience === "professionnel" ? "selected" : ""} onClick={() => { setAudience("professionnel"); setPackageIndex(0); }}>Entreprise</button>
+      </div></fieldset>
+      <fieldset><legend>Formule de départ</legend><div className="quote-choices">{packages[audience].map(([name, price], index) => <label key={name} className={packageIndex === index ? "selected" : ""}><input type="radio" name="package" checked={packageIndex === index} onChange={() => setPackageIndex(index)} /><span><b>{name}</b><small>À partir de {price.toLocaleString("fr-FR")} € TTC</small></span></label>)}</div></fieldset>
+      <fieldset><legend>Options</legend><div className="quote-options">{options.map(([name, price]) => <label key={name}><input type="checkbox" checked={selected.includes(name)} onChange={() => toggle(name)} /><span>{name}</span><b>{price ? `+ ${price} €` : "+ 35 %"}</b></label>)}</div></fieldset>
+      <fieldset><legend>Travail à l’heure — en complément</legend><p className="field-note">Pour une retouche, un conseil ou une demande hors forfait : 55 € TTC / heure, minimum 2 heures. Cette formule est facultative.</p><input className="hours-input" type="number" min="0" max="40" value={hours || ""} placeholder="Nombre d’heures" onChange={(event) => setHours(Math.max(0, Number(event.target.value) || 0))} /></fieldset>
     </form>
-  );
+    <aside className="quote-summary"><p className="kicker">TOTAL INDICATIF</p><strong>{total.toLocaleString("fr-FR")} €</strong><span>TTC · TVA non applicable, art. 293 B du CGI</span><p>Le montant affiché est une estimation indicative. Le périmètre, les livrables, les délais, les corrections et le prix définitif seront confirmés dans un devis avant le début de la prestation.</p><a className="button button-primary" href={`mailto:bgeditworks@gmail.com?subject=Demande%20de%20devis%20en%20ligne%20-%20BG%20EDITWORKS&body=${encodeURIComponent(mailBody)}`}>Envoyer ma demande <span>↗</span></a></aside>
+  </div>;
 }
