@@ -10,9 +10,9 @@ const services = [
 ];
 
 const projects = [
-  { type: "MONTAGE · INTERVIEW", title: "Portrait de marque", mark: "01" },
-  { type: "MOTION DESIGN", title: "Identité en mouvement", mark: "02" },
-  { type: "ANIMATION 2D", title: "Expliquer en images", mark: "03" },
+  { type: "MONTAGE · INTERVIEW", title: "Portrait de marque", mark: "01", image: "/process-ajustements.png", position: "center" },
+  { type: "MOTION DESIGN", title: "Identité en mouvement", mark: "02", image: "/process-creation.png", position: "center" },
+  { type: "ANIMATION 2D", title: "Expliquer en images", mark: "03", image: "/process-echange.png", position: "center 42%" },
 ];
 
 const animationNotes = [
@@ -58,15 +58,16 @@ const options = [
   ["Livraison prioritaire", "+ 35 %", "sous réserve de disponibilité"],
 ];
 
-export function SiteExperience() {
+export function SiteExperience({ focus }: { focus?: string } = {}) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [audience, setAudience] = useState<keyof typeof packagesByAudience>("particulier");
   useEffect(() => {
+    if (focus) window.setTimeout(() => document.getElementById(focus)?.scrollIntoView({ behavior: "smooth", block: "start" }), 40);
     const items = document.querySelectorAll("[data-reveal]");
     const observer = new IntersectionObserver(entries => entries.forEach(e => e.isIntersecting && e.target.classList.add("is-visible")), { threshold: .12 });
     items.forEach(item => observer.observe(item));
     return () => observer.disconnect();
-  }, []);
+  }, [focus]);
 
   const close = () => setMenuOpen(false);
   return <main>
@@ -74,8 +75,8 @@ export function SiteExperience() {
       <a className="brand" href="#top" aria-label="BG Editworks, accueil"><span>BG</span><b>EDITWORKS</b></a>
       <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="Ouvrir le menu"><i/><i/></button>
       <nav className={menuOpen ? "open" : ""} aria-label="Navigation principale">
-        <a onClick={close} href="#services">Services</a><a onClick={close} href="#offres">Offres & tarifs</a><a onClick={close} href="#options">Options</a><a onClick={close} href="#portfolio">Portfolio</a><a onClick={close} href="#methode">Méthode</a><a onClick={close} href="#studio">Le studio</a>
-        <a onClick={close} className="nav-cta" href="#contact">Parler de votre projet</a>
+        <a onClick={close} href="/services">Services</a><a onClick={close} href="/offres">Offres & tarifs</a><a onClick={close} href="/options">Options</a><a onClick={close} href="/portfolio">Portfolio</a><a onClick={close} href="/methode">Méthode</a><a onClick={close} href="/a-propos">Le studio</a>
+        <a onClick={close} className="nav-cta" href="/devis">Parler de votre projet</a>
       </nav>
     </header>
 
@@ -85,7 +86,7 @@ export function SiteExperience() {
         <p className="eyebrow"><span/> Studio indépendant de post-production</p>
         <h1>DONNEZ DU <em>RYTHME</em><br/>À VOS IMAGES.</h1>
         <p className="hero-lead">Montage vidéo, motion design et animation 2D pour transformer vos rushes en contenus qui captent l’attention.</p>
-        <div className="hero-actions"><a className="button button-primary" href="#offres">Voir les offres <span>↘</span></a><a className="button button-ghost" href="#contact">Demander un devis</a></div>
+      <div className="hero-actions"><a className="button button-primary" href="/offres">Voir les offres <span>↘</span></a><a className="button button-ghost" href="/devis">Demander un devis</a></div>
       </div>
       <div className="hero-index" aria-hidden="true">PLAY <span>00:01:24</span></div>
       <a className="scroll" href="#services"><span/> DÉFILER</a>
@@ -104,9 +105,9 @@ export function SiteExperience() {
         <button role="tab" aria-selected={audience === "particulier"} className={audience === "particulier" ? "active" : ""} onClick={() => setAudience("particulier")}><span>01</span> Je suis un particulier</button>
         <button role="tab" aria-selected={audience === "professionnel"} className={audience === "professionnel" ? "active" : ""} onClick={() => setAudience("professionnel")}><span>02</span> Je représente une entreprise</button>
       </div>
-      <div className="audience-summary" data-reveal><p>{audience === "particulier" ? "Vidéos personnelles, créateurs, réseaux sociaux, souvenirs et événements — montage réalisé à partir de vos propres rushes." : "Interviews, vidéos de marque, contenus éditoriaux, campagnes et déclinaisons multi-formats — avec un cadre de production professionnel."}</p><a href="#options">Voir les options <span>↓</span></a></div>
+      <div className="audience-summary" data-reveal><p>{audience === "particulier" ? "Vidéos personnelles, créateurs, réseaux sociaux, souvenirs et événements — montage réalisé à partir de vos propres rushes." : "Interviews, vidéos de marque, contenus éditoriaux, campagnes et déclinaisons multi-formats — avec un cadre de production professionnel."}</p><a href="/options">Voir les options <span>↓</span></a></div>
       <div className="price-grid">
-        {packagesByAudience[audience].map((item) => <article className={item.featured ? "featured" : ""} data-reveal key={`${audience}-${item.name}`}><p className="price-tag">{item.name}</p><h3><small>À PARTIR DE · TTC</small> {item.price}</h3><p>{item.description}</p><ul>{item.details.map(detail => <li key={detail}>{detail}</li>)}</ul><a href="#contact">Demander un devis <span>→</span></a></article>)}
+        {packagesByAudience[audience].map((item) => <article className={item.featured ? "featured" : ""} data-reveal key={`${audience}-${item.name}`}><p className="price-tag">{item.name}</p><h3><small>À PARTIR DE · TTC</small> {item.price}</h3><p>{item.description}</p><ul>{item.details.map(detail => <li key={detail}>{detail}</li>)}</ul><a href="/devis">Demander un devis <span>→</span></a></article>)}
       </div>
       <div className="option-panel" id="options" data-reveal>
         <div className="option-intro"><p className="kicker">OPTIONS À LA CARTE</p><h3>Complétez votre montage.</h3><p>Tarifs TTC indicatifs ajoutés au forfait de base. Chaque option est confirmée dans le devis avant le démarrage. TVA non applicable, art. 293 B du CGI.</p></div>
@@ -119,7 +120,7 @@ export function SiteExperience() {
     <section className="section work" id="portfolio">
       <div className="section-heading split" data-reveal><div><p className="kicker">03 — SÉLECTION</p><h2>Showreel<br/><em>BG EDITWORKS.</em></h2></div><p>Une compilation de travaux en montage vidéo, motion design et animation 2D, réunie dans un montage rythmé avec transitions en fondu et bande-son dédiée.</p></div>
       <article className="showreel-card" data-reveal><video className="showreel-video" controls preload="metadata" poster="/og.png"><source src="/showreel.mp4" type="video/mp4"/>Votre navigateur ne prend pas en charge la vidéo.</video><div className="showreel-copy"><p className="kicker">SHOWREEL · MONTAGE & ANIMATION</p><h3>Donner du rythme à vos images.</h3><p>Exemple de compilation réunissant six identités animées, montées et enchaînées avec une transition en fondu et une bande-son dédiée.</p><div className="showreel-notes">{animationNotes.map(([title, text]) => <div key={title}><strong>{title}</strong><span>{text}</span></div>)}</div></div></article>
-      <div className="project-grid">{projects.map((project, i) => <article className={`project project-${i+1}`} key={project.mark} data-reveal><div className="project-visual"><span className="frame-corner tl"/><span className="frame-corner br"/><b>{project.mark}</b><div className="timeline">{[1,2,3,4,5,6,7,8].map(n => <i key={n}/>)}</div><div className="play">▶</div></div><p>{project.type}</p><h3>{project.title}</h3></article>)}</div>
+      <div className="project-grid">{projects.map((project, i) => <article className={`project project-${i+1}`} key={project.mark} data-reveal><div className="project-visual" style={{backgroundImage: `linear-gradient(180deg,#05050622,#050506cc), url(${project.image})`, backgroundPosition: project.position}}><span className="frame-corner tl"/><span className="frame-corner br"/><b>{project.mark}</b><div className="timeline">{[1,2,3,4,5,6,7,8].map(n => <i key={n}/>)}</div><div className="play">▶</div></div><p>{project.type}</p><h3>{project.title}</h3></article>)}</div>
     </section>
 
     <section className="section process" id="methode">
@@ -129,7 +130,7 @@ export function SiteExperience() {
 
     <section className="studio" id="studio">
       <div className="studio-visual" aria-hidden="true"><div className="monitor"><span>BG</span><i/><i/><i/></div><div className="desk"/></div>
-      <div className="studio-copy" data-reveal><p className="kicker">05 — LE STUDIO</p><h2>Un interlocuteur.<br/><em>Une vision.</em></h2><p>BG EDITWORKS est un studio indépendant : votre projet est suivi de bout en bout par une seule personne, avec une communication directe et un soin constant.</p><p>La souplesse d’un indépendant, avec une méthode structurée et une exigence professionnelle.</p><a className="text-link" href="#contact">DÉMARRER UN PROJET <span>→</span></a></div>
+      <div className="studio-copy" data-reveal><p className="kicker">05 — LE STUDIO</p><h2>Un interlocuteur.<br/><em>Une vision.</em></h2><p>BG EDITWORKS est un studio indépendant : votre projet est suivi de bout en bout par une seule personne, avec une communication directe et un soin constant.</p><p>La souplesse d’un indépendant, avec une méthode structurée et une exigence professionnelle.</p><a className="text-link" href="/a-propos">DÉCOUVRIR LE STUDIO <span>→</span></a></div>
     </section>
 
     <section className="contact" id="contact">
