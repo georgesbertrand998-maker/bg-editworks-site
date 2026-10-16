@@ -120,6 +120,28 @@ export function SiteExperience({ focus }: { focus?: string } = {}) {
       <div className={`price-grid ${audience}`}>
         {packagesByAudience[audience].map((item) => <article className={item.featured ? "featured" : ""} data-reveal key={`${audience}-${item.name}`}><p className="price-tag">{item.name}</p><h3><small>À PARTIR DE · TTC</small> {item.price}</h3><p>{item.description}</p><ul>{item.details.map(detail => <li key={detail}>{detail}</li>)}</ul><a href="/devis">Construire mon devis <span>→</span></a></article>)}
       </div>
+      <section className="time-offers" aria-labelledby="time-offers-title">
+        <div className="option-intro"><h3 id="time-offers-title">Montage à la demi-journée ou à la journée</h3><p>Pour les particuliers et les professionnels, réservez un créneau consacré au montage de vos vidéos.</p></div>
+        <div className="time-offers-grid">
+          <article><h4>Demi-journée — 150 € TTC</h4><p>4 heures de travail consacrées à votre projet.</p></article>
+          <article><h4>Tarif à la journée — 280 € TTC</h4><p>8 heures de travail consacrées à votre projet.</p></article>
+        </div>
+        <p className="time-offers-terms">Le contenu de la prestation et les livrables sont définis ensemble avant réservation. Le dérushage, le montage, les ajustements et les exports sont décomptés du temps réservé. Ces formules correspondent à un temps de travail, sans garantie de finalisation complète du projet dans ce créneau. Tout dépassement fait l’objet de votre accord préalable et d’un devis complémentaire.</p>
+        <a className="button button-primary" href="/devis">Demander un devis</a>
+      </section>
+      {audience === "professionnel" && <section className="time-offers monthly-offers" aria-labelledby="monthly-offers-title">
+        <div className="option-intro"><p className="kicker">COLLABORATIONS RÉGULIÈRES · PROFESSIONNELS</p><h3 id="monthly-offers-title">Un partenaire montage pour vos contenus réguliers</h3><p>Réservez un volume de journées consacré à vos projets et bénéficiez d’un tarif dégressif, d’un interlocuteur unique et d’un planning convenu à l’avance.</p></div>
+        <div className="time-offers-grid monthly-offers-grid">
+          {[
+            { days: 4, hours: 32, price: "1 040", daily: 260, saving: 80, percent: "7,1" },
+            { days: 8, hours: 64, price: "2 000", daily: 250, saving: 240, percent: "10,7" },
+            { days: 12, hours: 96, price: "2 880", daily: 240, saving: 480, percent: "14,3" },
+          ].map(offer => <article key={offer.days}><h4>{offer.days} jours par mois</h4><p>{offer.hours} heures de travail réservées</p><strong className="monthly-price">{offer.price} € TTC / mois</strong><p>Soit {offer.daily} € TTC par journée de 8 h</p><p className="monthly-saving">Économisez {offer.saving} €/mois · soit {offer.percent} %</p></article>)}
+        </div>
+        <p className="time-offers-terms">Économies calculées par rapport à des journées réservées à l’unité à 280 € TTC, pour le même volume de travail.</p>
+        <p className="time-offers-terms">Premier mois payé, puis renouvellement d’un commun accord. Le planning, les livrables et les corrections sont définis au devis, dans la limite du temps réservé. La préparation, le montage, les ajustements et les exports sont décomptés de ce volume. Les animations complexes et les ressources payantes sont chiffrées au devis. Tout dépassement nécessite votre accord préalable.</p>
+        <a className="button button-primary" href="/devis">Parlons de votre collaboration</a>
+      </section>}
       <div className="option-panel" id="options" data-reveal>
         <div className="option-intro"><p className="kicker">OPTIONS À LA CARTE</p><h3>Complétez votre montage.</h3><p>Tarifs TTC indicatifs ajoutés au forfait de base. Chaque option est confirmée dans le devis avant le démarrage. TVA non applicable, art. 293 B du CGI.</p></div>
         <div className="option-grid">{options.filter(([name]) => name !== "Livraison prioritaire").map(([name, price, note]) => <article key={name}><div><h4>{name}</h4><p>{note}</p></div><strong><small>À PARTIR DE · TTC</small>{price}</strong></article>)}</div>
