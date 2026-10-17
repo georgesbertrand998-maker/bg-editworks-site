@@ -1,18 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const services = [
-  { n: "01", title: "Montage vidéo", tool: "Premiere Pro", image: "/process-ajustements.png", position: "center", text: "Interviews, contenus de marque, formats YouTube et réseaux sociaux : un montage précis, rythmé et pensé pour votre audience." },
-  { n: "02", title: "Motion Design", tool: "After Effects", image: "/process-creation.png", position: "center", text: "Titres, habillages graphiques, logos animés et transitions sur mesure pour donner une identité forte à vos contenus." },
-  { n: "03", title: "Animation 2D", tool: "Design en mouvement", image: "/process-echange.png", position: "center 42%", text: "Des animations claires et modernes pour expliquer, promouvoir ou raconter votre message avec impact." },
-  { n: "04", title: "Post-production", tool: "Image · Son · Export", image: "/process-cadrage.png", position: "center", text: "Étalonnage, nettoyage audio, sous-titrage et exports optimisés pour chaque canal de diffusion." },
+  { n: "01", title: "Montage vidéo", tool: "Premiere Pro", image: "/process-ajustements.webp", position: "center", text: "Interviews, contenus de marque, formats YouTube et réseaux sociaux : un montage précis, rythmé et pensé pour votre audience." },
+  { n: "02", title: "Motion Design", tool: "After Effects", image: "/process-creation.webp", position: "center", text: "Titres, habillages graphiques, logos animés et transitions sur mesure pour donner une identité forte à vos contenus." },
+  { n: "03", title: "Animation 2D", tool: "Design en mouvement", image: "/process-echange.webp", position: "center 42%", text: "Des animations claires et modernes pour expliquer, promouvoir ou raconter votre message avec impact." },
+  { n: "04", title: "Post-production", tool: "Image · Son · Export", image: "/process-cadrage.webp", position: "center", text: "Étalonnage, nettoyage audio, sous-titrage et exports optimisés pour chaque canal de diffusion." },
 ];
 
 const projects = [
-  { type: "MONTAGE · INTERVIEW", title: "Portrait de marque", mark: "01", image: "/process-ajustements.png", position: "center" },
-  { type: "MOTION DESIGN", title: "Identité en mouvement", mark: "02", image: "/process-creation.png", position: "center" },
-  { type: "ANIMATION 2D", title: "Expliquer en images", mark: "03", image: "/process-echange.png", position: "center 42%" },
+  { type: "MONTAGE · INTERVIEW", title: "Portrait de marque", mark: "01", image: "/process-ajustements.webp", position: "center" },
+  { type: "MOTION DESIGN", title: "Identité en mouvement", mark: "02", image: "/process-creation.webp", position: "center" },
+  { type: "ANIMATION 2D", title: "Expliquer en images", mark: "03", image: "/process-echange.webp", position: "center 42%" },
 ];
 
 const animationNotes = [
@@ -71,21 +71,37 @@ const options = [
 
 export function SiteExperience({ focus }: { focus?: string } = {}) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
   const [audience, setAudience] = useState<keyof typeof packagesByAudience>("particulier");
   useEffect(() => {
-    if (focus) window.setTimeout(() => document.getElementById(focus)?.scrollIntoView({ behavior: "smooth", block: "start" }), 40);
+
     const items = document.querySelectorAll("[data-reveal]");
     const observer = new IntersectionObserver(entries => entries.forEach(e => e.isIntersecting && e.target.classList.add("is-visible")), { threshold: .12 });
     items.forEach(item => observer.observe(item));
     return () => observer.disconnect();
+  }, [focus, audience]);
+  useEffect(() => {
+    if (!focus) return;
+    const timer = window.setTimeout(() => document.getElementById(focus)?.scrollIntoView({ behavior: "smooth", block: "start" }), 40);
+    return () => window.clearTimeout(timer);
   }, [focus]);
 
+  useEffect(() => {
+    const closeOnEscape = (event: KeyboardEvent) => { if (event.key === "Escape" && menuOpen) { setMenuOpen(false); menuButton.current?.focus(); } };
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, [menuOpen]);
+  const ServicesHeading = focus === "services" ? "h1" : "h2";
+  const OffersHeading = focus === "offres" || focus === "options" ? "h1" : "h2";
+  const PortfolioHeading = focus === "portfolio" ? "h1" : "h2";
+  const MethodHeading = focus === "methode" ? "h1" : "h2";
+  const StudioHeading = focus === "studio" ? "h1" : "h2";
   const close = () => setMenuOpen(false);
   return <main className={focus ? `focus-${focus}` : undefined}>
     <header className="nav-shell">
       <a className="brand" href="/" aria-label="BG Editworks, accueil"><span>BG</span><b>EDITWORKS</b></a>
-      <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="Ouvrir le menu"><i/><i/></button>
-      <nav className={menuOpen ? "open" : ""} aria-label="Navigation principale">
+      <button ref={menuButton} className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-controls="navigation-principale" aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}><i/><i/></button>
+      <nav id="navigation-principale" className={menuOpen ? "open" : ""} aria-label="Navigation principale">
         <a onClick={close} href="/services">Services</a><a onClick={close} href="/offres">Offres & tarifs</a><a onClick={close} href="/options">Options</a><a onClick={close} href="/portfolio">Portfolio</a><a onClick={close} href="/methode">Méthode</a><a onClick={close} href="/a-propos">Le studio</a>
         <a onClick={close} className="nav-cta" href="/devis">Devis en ligne</a>
       </nav>
@@ -106,12 +122,12 @@ export function SiteExperience({ focus }: { focus?: string } = {}) {
     <section className="statement" data-reveal><p>UNE IDÉE. DES RUSHES.</p><h2>UN RÉCIT QUI<br/><em>RESTE EN TÊTE.</em></h2><p className="statement-note">Chaque coupe, chaque mouvement et chaque silence servent une intention.</p></section>
 
     <section className="section services" id="services">
-      <div className="section-heading" data-reveal><p className="kicker">01 — EXPERTISE</p><h2>Un regard complet<br/>sur vos <em>images.</em></h2></div>
+      <div className="section-heading" data-reveal><p className="kicker">01 — EXPERTISE</p><ServicesHeading>Un regard complet<br/>sur vos <em>images.</em></ServicesHeading></div>
       <div className="service-list">{services.map((service) => <article key={service.n} className="service" data-reveal><div className="service-image" style={{ backgroundImage: `url(${service.image})`, backgroundPosition: service.position }} aria-hidden="true"><span>{service.n}</span></div><div className="service-title"><p>{service.tool}</p><h3>{service.title}</h3></div><p className="service-text">{service.text}</p><span className="service-arrow">↗</span></article>)}</div>
     </section>
 
     <section className="section pricing" id="tarifs">
-      <div className="section-heading split" id="offres" data-reveal><div><p className="kicker">02 — OFFRES & TARIFS</p><h2>Choisissez votre<br/><em>profil.</em></h2></div><p>Particulier ou professionnel : sélectionnez votre profil pour afficher les prestations adaptées. Tous les montants sont des prix de départ TTC, confirmés par un devis. TVA non applicable, art. 293 B du CGI.</p></div>
+      <div className="section-heading split" id="offres" data-reveal><div><p className="kicker">02 — OFFRES & TARIFS</p><OffersHeading>{focus === "options" ? <>Options pour<br/><em>votre montage.</em></> : <>Choisissez votre<br/><em>profil.</em></>}</OffersHeading></div><p>Particulier ou professionnel : sélectionnez votre profil pour afficher les prestations adaptées. Tous les montants sont des prix de départ TTC, confirmés par un devis. TVA non applicable, art. 293 B du CGI.</p></div>
       <div className="audience-switch" role="tablist" aria-label="Choisir le type de client" data-reveal>
         <button role="tab" aria-selected={audience === "particulier"} className={audience === "particulier" ? "active" : ""} onClick={() => setAudience("particulier")}><span>01</span> Je suis un particulier</button>
         <button role="tab" aria-selected={audience === "professionnel"} className={audience === "professionnel" ? "active" : ""} onClick={() => setAudience("professionnel")}><span>02</span> Je représente une entreprise</button>
@@ -152,21 +168,21 @@ export function SiteExperience({ focus }: { focus?: string } = {}) {
     </section>
 
     <section className="section work" id="portfolio">
-      <div className="section-heading split" data-reveal><div><p className="kicker">03 — SÉLECTION</p><h2>Showreel<br/><em>BG EDITWORKS.</em></h2></div><p><strong>Portfolio en cours de construction.</strong> Exemples présentés à titre de démonstration : une compilation de travaux en montage vidéo, motion design et animation 2D, réunie dans un montage rythmé avec transitions en fondu et bande-son dédiée.</p></div>
-      <article className="showreel-card" data-reveal><video className="showreel-video" controls preload="metadata" poster="/og.png"><source src="/showreel.mp4" type="video/mp4"/>Votre navigateur ne prend pas en charge la vidéo.</video><div className="showreel-copy"><p className="kicker">SHOWREEL · MONTAGE & ANIMATION</p><h3>Donner du rythme à vos images.</h3><p>Exemple de compilation réunissant six identités animées, montées et enchaînées avec une transition en fondu et une bande-son dédiée.</p><div className="showreel-notes">{animationNotes.map(([title, text]) => <div key={title}><strong>{title}</strong><span>{text}</span></div>)}</div></div></article>
-      <article className="showreel-card" style={{ marginTop: 28 }} data-reveal><video className="showreel-video" controls preload="metadata" playsInline poster="/totem-solaire.jpg"><source src="/totem-solaire.mp4" type="video/mp4"/>Votre navigateur ne prend pas en charge la vidéo.</video><div className="showreel-copy"><p className="kicker">CRÉATION ÉVÉNEMENTIELLE · ÉLECTRO</p><h3>TOTEM SOLAIRE</h3><p>Une création audiovisuelle pour un événement électro, mêlant montage rythmé, ambiances immersives et habillage visuel.</p><div className="showreel-notes"><div><strong>Montage</strong><span>Sélection et enchaînement des plans, progression de l’ambiance et rythme sur la musique.</span></div><div><strong>Transitions</strong><span>Déformations, poussées de zoom et secousses ponctuelles pour accentuer les temps forts.</span></div><div><strong>Habillage</strong><span>Présentation de BG EDITWORKS en ouverture, titrage animé et intégration du logo TOTEM SOLAIRE.</span></div><div><strong>Colorimétrie</strong><span>Correction colorimétrique et étalonnage : harmonisation des plans et look cinématographique aux ombres bleu-vert et aux lumières orangées.</span></div><div><strong>Finition</strong><span>Montage et composition en 4K, avec une version optimisée pour la diffusion web.</span></div></div><p>Format horizontal · 1 min 35 s</p></div></article>
-      <article className="portfolio-video-card" data-reveal><div className="portfolio-video-frame"><video controls preload="metadata" playsInline><source src="/cafe-exercice-vertical.mp4" type="video/mp4"/>Votre navigateur ne prend pas en charge la vidéo.</video></div><div className="portfolio-video-copy"><p className="kicker">EXEMPLE · EXERCICE DE FORMATION</p><h3>Montage vidéo café.</h3><p>Exercice de mise en scène autour de la préparation d’un café, avec un traitement vertical pensé pour les formats sociaux et la démonstration du rythme, du cadrage et des raccords.</p></div></article>
-      <div className="project-grid">{projects.map((project, i) => <article className={`project project-${i+1}`} key={project.mark} data-reveal><div className="project-visual" style={{backgroundImage: `linear-gradient(180deg,#05050622,#050506cc), url(${project.image})`, backgroundPosition: project.position}}><span className="frame-corner tl"/><span className="frame-corner br"/><b>{project.mark}</b><div className="timeline">{[1,2,3,4,5,6,7,8].map(n => <i key={n}/>)}</div><div className="play">▶</div></div><p>{project.type}</p><h3>{project.title}</h3></article>)}</div>
+      <div className="section-heading split" data-reveal><div><p className="kicker">03 — SÉLECTION</p><PortfolioHeading>Showreel<br/><em>BG EDITWORKS.</em></PortfolioHeading></div><p><strong>Portfolio en cours de construction.</strong> Exemples présentés à titre de démonstration : une compilation de travaux en montage vidéo, motion design et animation 2D, réunie dans un montage rythmé avec transitions en fondu et bande-son dédiée.</p></div>
+      <article className="showreel-card" data-reveal><video className="showreel-video" controls preload="metadata" poster="/showreel-apercu.jpg" aria-label="Showreel BG EDITWORKS : compilation de démonstrations"><source src="/showreel.mp4" type="video/mp4"/>Votre navigateur ne prend pas en charge la vidéo.</video><div className="showreel-copy"><p className="kicker">SHOWREEL · MONTAGE & ANIMATION</p><h3>Donner du rythme à vos images.</h3><p>Exemple de compilation réunissant six identités animées, montées et enchaînées avec une transition en fondu et une bande-son dédiée.</p><div className="showreel-notes">{animationNotes.map(([title, text]) => <div key={title}><strong>{title}</strong><span>{text}</span></div>)}</div></div></article>
+      <article className="showreel-card" style={{ marginTop: 28 }} data-reveal><video className="showreel-video" controls preload="metadata" playsInline aria-label="Création événementielle TOTEM SOLAIRE" poster="/totem-solaire.jpg"><source src="/totem-solaire.mp4" type="video/mp4"/>Votre navigateur ne prend pas en charge la vidéo.</video><div className="showreel-copy"><p className="kicker">CRÉATION ÉVÉNEMENTIELLE · ÉLECTRO</p><h3>TOTEM SOLAIRE</h3><p>Une création audiovisuelle pour un événement électro, mêlant montage rythmé, ambiances immersives et habillage visuel.</p><div className="showreel-notes"><div><strong>Montage</strong><span>Sélection et enchaînement des plans, progression de l’ambiance et rythme sur la musique.</span></div><div><strong>Transitions</strong><span>Déformations, poussées de zoom et secousses ponctuelles pour accentuer les temps forts.</span></div><div><strong>Habillage</strong><span>Présentation de BG EDITWORKS en ouverture, titrage animé et intégration du logo TOTEM SOLAIRE.</span></div><div><strong>Colorimétrie</strong><span>Correction colorimétrique et étalonnage : harmonisation des plans et look cinématographique aux ombres bleu-vert et aux lumières orangées.</span></div><div><strong>Finition</strong><span>Montage et composition en 4K, avec une version optimisée pour la diffusion web.</span></div></div><p>Format horizontal · 1 min 35 s</p></div></article>
+      <article className="portfolio-video-card" data-reveal><div className="portfolio-video-frame"><video controls preload="metadata" playsInline aria-label="Exercice de montage vidéo café"><source src="/cafe-exercice-vertical.mp4" type="video/mp4"/>Votre navigateur ne prend pas en charge la vidéo.</video></div><div className="portfolio-video-copy"><p className="kicker">EXEMPLE · EXERCICE DE FORMATION</p><h3>Montage vidéo café.</h3><p>Exercice de mise en scène autour de la préparation d’un café, avec un traitement vertical pensé pour les formats sociaux et la démonstration du rythme, du cadrage et des raccords.</p></div></article>
+      <div className="project-grid">{projects.map((project, i) => <article className={`project project-${i+1}`} key={project.mark} data-reveal><div className="project-visual" style={{backgroundImage: `linear-gradient(180deg,#05050622,#050506cc), url(${project.image})`, backgroundPosition: project.position}}><span className="frame-corner tl"/><span className="frame-corner br"/><b>{project.mark}</b><div className="timeline">{[1,2,3,4,5,6,7,8].map(n => <i key={n}/>)}</div><span className="concept-badge">Illustration de prestation</span></div><p>{project.type}</p><h3>{project.title}</h3></article>)}</div>
     </section>
 
     <section className="section process" id="methode">
-      <div className="section-heading" data-reveal><p className="kicker">04 — PROCESSUS</p><h2>Simple. Clair.<br/><em>Maîtrisé.</em></h2></div>
+      <div className="section-heading" data-reveal><p className="kicker">04 — PROCESSUS</p><MethodHeading>Simple. Clair.<br/><em>Maîtrisé.</em></MethodHeading></div>
       <div className="steps">{steps.map(step => <article key={step[0]} data-reveal><span>{step[0]}</span><h3>{step[1]}</h3><p>{step[2]}</p></article>)}</div>
     </section>
 
     <section className="studio" id="studio">
       <div className="studio-visual" aria-hidden="true"><div className="monitor"><span>BG</span><i/><i/><i/></div><div className="desk"/></div>
-      <div className="studio-copy" data-reveal><p className="kicker">05 — LE STUDIO</p><h2>Un interlocuteur.<br/><em>Une vision.</em></h2><p>BG EDITWORKS est un studio indépendant : votre projet est suivi de bout en bout par une seule personne, avec une communication directe et un soin constant.</p><p>La souplesse d’un indépendant, avec une méthode structurée et une exigence professionnelle.</p><a className="text-link" href="/a-propos">DÉCOUVRIR LE STUDIO <span>→</span></a></div>
+      <div className="studio-copy" data-reveal><p className="kicker">05 — LE STUDIO</p><StudioHeading>Un interlocuteur.<br/><em>Une vision.</em></StudioHeading><p>BG EDITWORKS est un studio indépendant : votre projet est suivi de bout en bout par une seule personne, avec une communication directe et un soin constant.</p><p>La souplesse d’un indépendant, avec une méthode structurée et une exigence professionnelle.</p><a className="text-link" href="/a-propos">DÉCOUVRIR LE STUDIO <span>→</span></a></div>
     </section>
 
     <section className="contact" id="contact">

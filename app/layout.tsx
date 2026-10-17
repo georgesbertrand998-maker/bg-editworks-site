@@ -1,13 +1,5 @@
 import type { Metadata } from "next";
-import { Barlow_Condensed, Montserrat } from "next/font/google";
 import "./globals.css";
-
-const display = Barlow_Condensed({
-  weight: ["600", "700", "800", "900"],
-  subsets: ["latin"],
-  variable: "--font-display",
-});
-const body = Montserrat({ subsets: ["latin"], variable: "--font-body" });
 
 export const metadata: Metadata = {
   title: "BG EDITWORKS — Studio de post-production",
@@ -32,5 +24,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="fr"><body className={`${display.variable} ${body.variable}`}>{children}</body></html>;
+  return <html lang="fr"><body>{children}</body></html>;
 }
