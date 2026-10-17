@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { billableHours } from "./hourly-pricing";
 
 const packages = {
   particulier: [
@@ -26,27 +27,28 @@ export default function QuoteForm() {
   const [audience, setAudience] = useState<keyof typeof packages>("particulier");
   const [packageIndex, setPackageIndex] = useState(0);
   const [selected, setSelected] = useState<string[]>([]);
-  const [hours, setHours] = useState(0);
+  const [requestedHours, setHours] = useState(0);
+  const hours = billableHours(requestedHours);
   const base = packages[audience][packageIndex]?.[1] ?? 0;
   const hourlyTotal = hours * 40;
   const fixedOptionsTotal = selected.reduce((sum, name) => name === "Livraison prioritaire" ? sum : sum + (options.find((item) => item[0] === name)?.[1] ?? 0), 0);
   const prioritySupplement = selected.includes("Livraison prioritaire") ? Math.round((base + fixedOptionsTotal + hourlyTotal) * .35) : 0;
   const total = base + fixedOptionsTotal + hourlyTotal + prioritySupplement;
-  const mailBody = useMemo(() => `Bonjour,\n\nJe souhaite une estimation pour ${packages[audience][packageIndex][0]}.\nOptions : ${selected.join(", ") || "aucune"}.\nHeures à la carte : ${hours || 0}.\nEstimation indicative TTC : ${total.toLocaleString("fr-FR")} €.\n\nMerci,`, [audience, packageIndex, selected, hours, total]);
+  const mailBody = useMemo(() => `Bonjour,\n\nJe souhaite une estimation pour ${packages[audience][packageIndex][0]}.\nOptions : ${selected.join(", ") || "aucune"}.\nHeures supplémentaires hors forfait : ${hours || 0}.\nEstimation indicative TTC : ${total.toLocaleString("fr-FR")} €.\n\nMerci,`, [audience, packageIndex, selected, hours, total]);
   const toggle = (name: string) => setSelected((current) => current.includes(name) ? current.filter((item) => item !== name) : [...current, name]);
   return <div className="quote-layout">
     <form className="quote-form" onSubmit={(event) => event.preventDefault()}>
       <p className="kicker">ESTIMATION EN LIGNE</p>
-      <h2>Construisez votre <em>devis.</em></h2>
+      <h1>Construisez votre <em>devis.</em></h1>
       <p className="quote-intro">Sélectionnez votre profil, une formule et les options utiles. Le montant se met à jour en temps réel ; le devis définitif est confirmé avant tout démarrage.</p>
       <fieldset><legend>Vous êtes</legend><div className="quote-audience">
-        <button type="button" className={audience === "particulier" ? "selected" : ""} onClick={() => { setAudience("particulier"); setPackageIndex(0); }}>Particulier</button>
-        <button type="button" className={audience === "professionnel" ? "selected" : ""} onClick={() => { setAudience("professionnel"); setPackageIndex(0); }}>Entreprise</button>
+        <button type="button" aria-pressed={audience === "particulier"} className={audience === "particulier" ? "selected" : ""} onClick={() => { setAudience("particulier"); setPackageIndex(0); }}>Particulier</button>
+        <button type="button" aria-pressed={audience === "professionnel"} className={audience === "professionnel" ? "selected" : ""} onClick={() => { setAudience("professionnel"); setPackageIndex(0); }}>Entreprise</button>
       </div></fieldset>
       <fieldset><legend>Formule de départ</legend><div className="quote-choices">{packages[audience].map(([name, price], index) => <label key={name} className={packageIndex === index ? "selected" : ""}><input type="radio" name="package" checked={packageIndex === index} onChange={() => setPackageIndex(index)} /><span><b>{name}</b><small>À partir de {price.toLocaleString("fr-FR")} € TTC</small></span></label>)}</div></fieldset>
-      <fieldset><legend>Options</legend><div className="quote-options">{options.map(([name, price]) => <label key={name}><input type="checkbox" checked={selected.includes(name)} onChange={() => toggle(name)} /><span>{name}</span><b>{price ? `+ ${price} €` : "+ 35 %"}</b></label>)}</div></fieldset>
-      <fieldset><legend>Travail à l’heure — en complément</legend><p className="field-note">Pour une retouche, un conseil ou une demande hors forfait : 40 € TTC / heure, minimum 2 heures. Cette formule est facultative.</p><input className="hours-input" type="number" min="0" max="40" value={hours || ""} placeholder="Nombre d’heures" onChange={(event) => setHours(Math.max(0, Number(event.target.value) || 0))} /></fieldset>
+      <fieldset><legend>Options hors inclusions du forfait</legend><p className="field-note">Ajoutez uniquement les besoins qui dépassent les éléments déjà inclus dans votre formule. Le périmètre et les éventuels suppléments seront confirmés ensemble dans le devis.</p><div className="quote-options">{options.map(([name, price]) => <label key={name}><input type="checkbox" checked={selected.includes(name)} onChange={() => toggle(name)} /><span>{name}</span><b>{price ? `+ ${price} €` : "+ 35 %"}</b></label>)}</div></fieldset>
+      <fieldset><legend>Travail supplémentaire hors forfait</legend><p className="field-note">40 € TTC par heure, minimum 2 heures (80 € TTC). Uniquement pour les demandes non incluses dans la prestation choisie : corrections au-delà des allers-retours inclus, nouveaux rushs ou changement de direction. Les corrections prévues au devis restent incluses. Tout supplément est chiffré et accepté avant sa réalisation. Cette option est facultative.</p><input className="hours-input" type="number" min="0" step="any" aria-label="Nombre d’heures de travail supplémentaire hors forfait" aria-describedby="hourly-minimum" value={requestedHours || ""} placeholder="Nombre d’heures" onChange={(event) => setHours(Math.max(0, Number(event.target.value) || 0))} /><p id="hourly-minimum" className="field-note" aria-live="polite">{requestedHours > 0 && requestedHours < 2 ? "Minimum de facturation appliqué : 2 heures, soit 80 € TTC en complément du forfait." : "Option facultative : 0 € sans heures ; sinon 2 heures minimum à 80 € TTC, puis 40 € TTC par heure supplémentaire."}</p></fieldset>
     </form>
-    <aside className="quote-summary"><p className="kicker">FACTURE PROVISOIRE · ESTIMATION</p><strong>{total.toLocaleString("fr-FR")} €</strong><span>TTC · TVA non applicable, art. 293 B du CGI</span><div className="quote-line-items"><div><span>{packages[audience][packageIndex][0]}</span><b>{base.toLocaleString("fr-FR")} €</b></div>{selected.map((name) => <div key={name}><span>{name}</span><b>{name === "Livraison prioritaire" ? "+ 35 %" : `+ ${(options.find((item) => item[0] === name)?.[1] ?? 0).toLocaleString("fr-FR")} €`}</b></div>)}{hours > 0 && <div><span>Travail à l’heure · {hours} h</span><b>+ {hourlyTotal.toLocaleString("fr-FR")} €</b></div>}</div><p>Cette facture provisoire se met à jour selon vos choix. Elle ne vaut pas facture définitive : le périmètre, les livrables, les délais, les corrections et le prix final seront confirmés dans le devis accepté avant le début de la prestation.</p><a className="button button-primary" href={`mailto:bgeditworks@gmail.com?subject=Demande%20de%20devis%20en%20ligne%20-%20BG%20EDITWORKS&body=${encodeURIComponent(mailBody)}`}>Envoyer ma demande <span>↗</span></a></aside>
+    <aside className="quote-summary"><p className="kicker">ESTIMATION INDICATIVE</p><strong role="status" aria-live="polite" aria-atomic="true">{total.toLocaleString("fr-FR")} €</strong><span>TTC · TVA non applicable, art. 293 B du CGI</span><div className="quote-line-items"><div><span>{packages[audience][packageIndex][0]}</span><b>{base.toLocaleString("fr-FR")} €</b></div>{selected.map((name) => <div key={name}><span>{name}</span><b>{name === "Livraison prioritaire" ? "+ 35 %" : `+ ${(options.find((item) => item[0] === name)?.[1] ?? 0).toLocaleString("fr-FR")} €`}</b></div>)}{hours > 0 && <div><span>Travail supplémentaire hors forfait · {hours} h</span><b>+ {hourlyTotal.toLocaleString("fr-FR")} €</b></div>}</div><p>Ce montant est une estimation, pas une facture : le périmètre, les livrables, les délais, les corrections et le prix final seront confirmés dans le devis accepté avant le début de la prestation.</p><a className="button button-primary" href={`mailto:bgeditworks@gmail.com?subject=Demande%20de%20devis%20en%20ligne%20-%20BG%20EDITWORKS&body=${encodeURIComponent(mailBody)}`}>Préparer ma demande par e-mail <span>↗</span></a><p>Ouvre votre messagerie avec le récapitulatif prérempli. La demande sera envoyée lorsque vous confirmerez son envoi dans votre messagerie.</p></aside>
   </div>;
 }
