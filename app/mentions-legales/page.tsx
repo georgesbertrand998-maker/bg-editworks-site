@@ -16,7 +16,7 @@ export default function LegalPage() {
     <section className="legal-hero">
       <p className="kicker">INFORMATIONS OFFICIELLES</p>
       <h1>Mentions<br/><em>légales.</em></h1>
-      <p>Dernière mise à jour : 3 octobre 2026.</p>
+      <p>Dernière mise à jour : 20 octobre 2026.</p>
     </section>
 
     <section className="legal-content">
@@ -34,7 +34,7 @@ export default function LegalPage() {
 
       <article>
         <span>03</span><h2>Hébergement</h2>
-        <p>Le site est hébergé par OpenAI Ireland Ltd, 1st Floor, The Liffey Trust Centre, 117-126 Sheriff Street Upper, Dublin 1, D01 YC43, Irlande.</p>
+        <p>Le site est hébergé par Cloudflare, Inc., 101 Townsend Street, San Francisco, CA 94107, États-Unis.</p>
       </article>
 
       <article>
