@@ -32,7 +32,7 @@ const options = [
 ] as const;
 
 export default function QuoteForm() {
-  const [audience, setAudience] = useState<keyof typeof packages>("particulier");
+  const [audience, setAudience] = useState<keyof typeof packages>("professionnel");
   const [packageIndex, setPackageIndex] = useState(0);
   const [selected, setSelected] = useState<string[]>([]);
   const [requestedHours, setHours] = useState(0);
@@ -60,8 +60,8 @@ export default function QuoteForm() {
       <h1>Construisez votre <em>devis.</em></h1>
       <p className="quote-intro">Sélectionnez votre profil, une formule et les options utiles. Le montant se met à jour en temps réel ; le devis définitif est confirmé avant tout démarrage.</p>
       <fieldset><legend>Vous êtes</legend><div className="quote-audience">
-        <button type="button" aria-pressed={audience === "particulier"} className={audience === "particulier" ? "selected" : ""} onClick={() => { setAudience("particulier"); setPackageIndex(0); }}>Particulier</button>
         <button type="button" aria-pressed={audience === "professionnel"} className={audience === "professionnel" ? "selected" : ""} onClick={() => { setAudience("professionnel"); setPackageIndex(0); }}>Entreprise</button>
+        <button type="button" aria-pressed={audience === "particulier"} className={audience === "particulier" ? "selected" : ""} onClick={() => { setAudience("particulier"); setPackageIndex(0); }}>Particulier</button>
       </div></fieldset>
       <fieldset><legend>Formule de départ</legend><div className="quote-choices">{packages[audience].map(([name, price], index) => <label key={name} className={packageIndex === index ? "selected" : ""}><input type="radio" name="package" checked={packageIndex === index} onChange={() => setPackageIndex(index)} /><span><b>{name}</b><small>À partir de {price.toLocaleString("fr-FR")} € TTC</small></span></label>)}</div></fieldset>
       {audience === "professionnel" && <fieldset><legend>Ou une collaboration mensuelle</legend><p className="field-note">Un volume d’heures réservé chaque mois pour vos contenus réguliers, au tarif dégressif.</p><div className="quote-choices">{monthlyPlans.map((plan, i) => { const index = packages.professionnel.length + i; return <label key={plan.name} className={packageIndex === index ? "selected" : ""}><input type="radio" name="package" checked={packageIndex === index} onChange={() => setPackageIndex(index)} /><span><b>{plan.name}</b><small>{plan.hours} h · dès {plan.prices[2].toLocaleString("fr-FR")} € TTC / mois</small></span></label>; })}</div></fieldset>}

@@ -72,7 +72,7 @@ const options = [
 export function SiteExperience({ focus }: { focus?: string } = {}) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButton = useRef<HTMLButtonElement>(null);
-  const [audience, setAudience] = useState<keyof typeof packagesByAudience>("particulier");
+  const [audience, setAudience] = useState<keyof typeof packagesByAudience>("professionnel");
   useEffect(() => {
 
     const items = document.querySelectorAll("[data-reveal]");
@@ -103,7 +103,7 @@ export function SiteExperience({ focus }: { focus?: string } = {}) {
       <button ref={menuButton} className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-controls="navigation-principale" aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}><i/><i/></button>
       <nav id="navigation-principale" className={menuOpen ? "open" : ""} aria-label="Navigation principale">
         <a onClick={close} href="/services">Services</a><a onClick={close} href="/offres">Offres & tarifs</a><a onClick={close} href="/options">Options</a><a onClick={close} href="/portfolio">Portfolio</a><a onClick={close} href="/methode">Méthode</a><a onClick={close} href="/a-propos">Le studio</a>
-        <a onClick={close} className="nav-cta" href="/devis">Devis en ligne</a>
+        <a onClick={close} href="/feedback">Avis clients</a><a onClick={close} className="nav-cta" href="/devis">Devis en ligne</a>
       </nav>
     </header>
 
@@ -129,8 +129,8 @@ export function SiteExperience({ focus }: { focus?: string } = {}) {
     <section className="section pricing" id="tarifs">
       <div className="section-heading split" id="offres" data-reveal><div><p className="kicker">02 — OFFRES & TARIFS</p><OffersHeading>{focus === "options" ? <>Options pour<br/><em>votre montage.</em></> : <>Choisissez votre<br/><em>profil.</em></>}</OffersHeading></div><p>Particulier ou professionnel : sélectionnez votre profil pour afficher les prestations adaptées. Tous les montants sont des prix de départ TTC, confirmés par un devis. TVA non applicable, art. 293 B du CGI.</p></div>
       <div className="audience-switch" role="tablist" aria-label="Choisir le type de client" data-reveal>
-        <button role="tab" aria-selected={audience === "particulier"} className={audience === "particulier" ? "active" : ""} onClick={() => setAudience("particulier")}><span>01</span> Je suis un particulier</button>
-        <button role="tab" aria-selected={audience === "professionnel"} className={audience === "professionnel" ? "active" : ""} onClick={() => setAudience("professionnel")}><span>02</span> Je représente une entreprise</button>
+        <button role="tab" aria-selected={audience === "professionnel"} className={audience === "professionnel" ? "active" : ""} onClick={() => setAudience("professionnel")}><span>01</span> Je représente une entreprise</button>
+        <button role="tab" aria-selected={audience === "particulier"} className={audience === "particulier" ? "active" : ""} onClick={() => setAudience("particulier")}><span>02</span> Je suis un particulier</button>
       </div>
       <div className="audience-summary" data-reveal><p>{audience === "particulier" ? "Vidéos personnelles, créateurs, réseaux sociaux, souvenirs et événements — montage réalisé à partir de vos propres rushes." : "Interviews, vidéos de marque, contenus éditoriaux, campagnes et déclinaisons multi-formats — avec un cadre de production professionnel."}</p><a href="/options">Voir les options <span>↓</span></a></div>
       <div className={`price-grid ${audience}`}>
@@ -190,12 +190,20 @@ export function SiteExperience({ focus }: { focus?: string } = {}) {
       <div className="studio-copy" data-reveal><p className="kicker">05 — LE STUDIO</p><StudioHeading>Un interlocuteur.<br/><em>Une vision.</em></StudioHeading><p>BG EDITWORKS est un studio indépendant : votre projet est suivi de bout en bout par une seule personne, avec une communication directe et un soin constant.</p><p>La souplesse d’un indépendant, avec une méthode structurée et une exigence professionnelle.</p><a className="text-link" href="/a-propos">DÉCOUVRIR LE STUDIO <span>→</span></a></div>
     </section>
 
+    <section className="section client-feedback" id="avis-clients" aria-labelledby="avis-clients-title">
+      <p className="kicker">APRÈS LA LIVRAISON</p>
+      <h2 id="avis-clients-title">VOTRE PROJET.<br/><em>VOTRE RETOUR.</em></h2>
+      <p>Le résultat, les échanges, les points à améliorer : racontez votre expérience avec BG EDITWORKS.</p>
+      <a className="button button-primary" href="/feedback">Laisser un avis <span aria-hidden="true">↗</span></a>
+      <p className="feedback-disclosure">Votre retour peut rester privé. Toute publication nécessite votre autorisation et une vérification de la prestation.</p>
+    </section>
+
     <section className="contact" id="contact">
       <p className="kicker" data-reveal>06 — CONTACT</p><h2 data-reveal>VOTRE PROCHAIN FILM<br/>COMMENCE <em>ICI.</em></h2>
       <div className="contact-row" data-reveal><div className="contact-details"><a className="phone" href="tel:+33614422782">06 14 42 27 82 <span>↗</span></a><a className="email" href="mailto:bgeditworks@gmail.com">bgeditworks@gmail.com <span>↗</span></a></div><div className="contact-actions"><a className="button button-primary" href="/devis">Devis en ligne</a><a className="button button-ghost" href="tel:+33614422782">Appeler le studio</a></div></div>
       <p className="contact-note">Disponible pour des collaborations à distance · France</p>
     </section>
 
-    <footer><a className="brand" href="/"><span>BG</span><b>EDITWORKS</b></a><p>Studio indépendant de post-production<br/>Montage · Motion Design · Animation 2D<br/><a href="mailto:bgeditworks@gmail.com">bgeditworks@gmail.com</a></p><div><a href="/services">Services</a><a href="/offres">Particuliers</a><a href="/offres">Professionnels</a><a href="/options">Options</a><a href="/devis">Devis en ligne</a><a href="/#contact">Contact</a><a href="/mentions-legales">Mentions légales</a></div><small>© 2026 Bertrand Paul Emmanuel GEORGES EI — BG EDITWORKS</small></footer>
+    <footer><a className="brand" href="/"><span>BG</span><b>EDITWORKS</b></a><p>Studio indépendant de post-production<br/>Montage · Motion Design · Animation 2D<br/><a href="mailto:bgeditworks@gmail.com">bgeditworks@gmail.com</a></p><div><a href="/services">Services</a><a href="/offres">Particuliers</a><a href="/offres">Professionnels</a><a href="/options">Options</a><a href="/devis">Devis en ligne</a><a href="/#contact">Contact</a><a href="/feedback">Avis clients</a><a href="/mentions-legales">Mentions légales</a></div><small>© 2026 Bertrand Paul Emmanuel GEORGES EI — BG EDITWORKS</small></footer>
   </main>;
 }
