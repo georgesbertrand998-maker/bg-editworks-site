@@ -194,6 +194,7 @@ export function SiteExperience({ focus }: { focus?: string } = {}) {
       <p className="kicker">APRÈS LA LIVRAISON</p>
       <h2 id="avis-clients-title">VOTRE PROJET.<br/><em>VOTRE RETOUR.</em></h2>
       <p>Le résultat, les échanges, les points à améliorer : racontez votre expérience avec BG EDITWORKS.</p>
+      <blockquote className="client-review" style={{margin:"28px 0 8px",padding:"26px 30px",maxWidth:760,border:"1px solid #ffffff20",borderLeft:"3px solid var(--red)",background:"#ffffff08"}}><p style={{margin:0,fontSize:18,lineHeight:1.7,color:"#ece9e6"}}>« Le travail a été fait rapidement et très bien fait. La communication a été fluide et la compréhension du projet a été instantanée. Je suis très satisfaite du service. »</p><div style={{marginTop:16,fontSize:12,letterSpacing:1,textTransform:"uppercase",color:"#a9a4a0"}}><b style={{color:"var(--red)"}}>Client BG EDITWORKS</b> · Montage vidéo pour les réseaux sociaux · Satisfaction 5/5</div></blockquote>
       <a className="button button-primary" href="/feedback">Laisser un avis <span aria-hidden="true">↗</span></a>
       <p className="feedback-disclosure">Votre retour peut rester privé. Toute publication nécessite votre autorisation et une vérification de la prestation.</p>
     </section>
