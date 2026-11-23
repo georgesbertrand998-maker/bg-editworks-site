@@ -41,7 +41,7 @@ export default function StudioPage() {
         <h1>Je m’appelle<br/><em>Bertrand.</em></h1>
         <p className="studio-hook">20 ans en cuisine gastronomique. Aujourd’hui, je monte vos vidéos avec la même exigence.</p>
         <p>Derrière BG EDITWORKS, il n’y a pas d’agence : c’est moi qui monte chacune de vos vidéos, du premier échange à la livraison.</p>
-        <p>Le montage vidéo est ma reconversion professionnelle, après 20 ans dans la restauration gastronomique, comme cuisinier puis chef, en Angleterre, au Luxembourg et pendant 13 ans en Allemagne, près de Francfort. J’en garde la rigueur, le sens du timing et l’exigence du détail, que je mets aujourd’hui au service de vos vidéos.</p>
+        <p>Le montage vidéo est ma reconversion professionnelle, après 20 ans dans la restauration gastronomique, comme cuisinier puis chef, en Angleterre, au Luxembourg et pendant 13 ans en Allemagne, près de Francfort. J’en garde la rigueur, le sens du timing et l’exigence du détail, que je mets aujourd’hui au service de vos projets.</p>
         <p>Je travaille sur Premiere Pro et After Effects, à distance, pour des clients en France et en Europe. Vous pouvez échanger avec moi en français, en anglais ou en allemand.</p>
         <p><strong>Avec moi, vous avez un seul interlocuteur.</strong> Vous me parlez directement, sans intermédiaire, et chaque retour est pris en compte.</p>
         <ul className="studio-list">
