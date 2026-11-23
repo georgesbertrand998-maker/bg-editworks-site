@@ -23,7 +23,7 @@ export default function LegalPage() {
       <article>
         <span>01</span><h2>Éditeur du site</h2>
         <p><strong>Bertrand Paul Emmanuel GEORGES EI</strong>, exerçant sous le nom commercial <strong>BG EDITWORKS</strong>.</p>
-        <p>Entrepreneur individuel — micro-entreprise<br/>35 rue de la Gare, 18300 Veaugues, France<br/>SIREN : 109 009 688<br/>SIRET : 109 009 688 00010<br/>Immatriculation : RCS Bourges 109 009 688<br/>Code APE : 5912Z</p>
+        <p>Entrepreneur individuel — micro-entreprise<br/>14 rue Romain Rolland, 58200 Cosne-Cours-sur-Loire, France<br/>SIREN : 109 009 688<br/>SIRET : 109 009 688 00010<br/>Immatriculation : RCS Bourges 109 009 688<br/>Code APE : 5912Z</p>
         <p><a href="mailto:bgeditworks@gmail.com">bgeditworks@gmail.com</a><br/><a href="tel:+33614422782">06 14 42 27 82</a></p>
       </article>
 
